@@ -49,6 +49,7 @@ p {
 }
 
 #top {
+    text-align: center;
     border-bottom: solid #4F4E4E 1px;
     position: absolute;
     /*El div será ubicado con relación a la pantalla*/
@@ -64,7 +65,7 @@ p {
 #top img {
     position: relative;
     width: 75px;
-    margin-left: 40%;
+
     margin-top: 10px;
     margin-bottom: 5px;
 }
