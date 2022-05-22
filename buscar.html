@@ -7,15 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <LINK REL=StyleSheet HREF="css/style.css" TYPE="text/css" MEDIA=screen>
     <title>App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@100&display=swap"
+        rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
+<body style="font-family: 'Roboto', sans-serif;">
     <div id="top">
         <img src="logo.svg">
     </div>
@@ -40,7 +45,7 @@
                 <img src='img/dott.jpeg' class='imgRedonda2' />
                 <p style="margin-top: 10px; width: 70%"><b>ERNETA</b>, Luciana
                 </p>
-                <i class="fa fa-chevron-right" aria-hidden="true" style="margin-top: 10px"></i>
+                <i class="fa fa-chevron-right" aria-hidden="true" style="margin-top: 10px" id="jugador"></i>
             </div>
         </div>
 
@@ -50,19 +55,46 @@
 
 
     <div id="barra">
-        <div><img src="img/icono-partidos-01.svg">
+        <div><img src="img/ic1.png" id="ic1">
             <p>PARTIDOS</p>
         </div>
-        <div style="padding-top: 5px">
-            <img src="img/icono-posiciones-01.svg">
-            <P style="margin-top: 7px">POSICIONES</P>
+        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+            <P style="padding-top: 5px">POSICIONES</P>
         </div>
-        <div><img src="img/icono-jugador-01.svg">
-            <P>JUGADOR</P>
+        <div><img src="img/ic3.png" id="ic3">
+            <P><b>JUGADOR</b></P>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded',
+        function () {
+            console.log('El DOM  esta listo!');
+        })
 
+
+    $(document).ready(function () {
+        $("#ic1").click(() => {
+            window.location.replace('./index.html')
+        })
+        $("#ic2").click(() => {
+            window.location.replace('./categ1.html')
+        })
+        $("#ic3").click(() => {
+            window.location.replace('./buscar.html')
+        })
+
+
+        $("#jugador").click(() => {
+            window.location.replace('./jugador.html?id=' + 1)
+        })
+    })
+
+
+
+
+
+</script>
 
 
 </html>

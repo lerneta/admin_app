@@ -2,14 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <LINK REL=StyleSheet HREF="css/style.css" TYPE="text/css" MEDIA=screen>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@100&display=swap"
         rel="stylesheet">
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>App</title>
 </head>
 
@@ -30,7 +31,8 @@
         </div>
         <div id="sec2">
             <p class="encabezado"><b>PARTIDOS</b></p>
-            <div class="partido">
+
+            <div class="partido" id="p1">
                 <p class="tit">Mac A - Zona de grupos</p>
                 <p class="subtit">Sábado 18-05</p>
                 <table class="result">
@@ -48,7 +50,7 @@
 
 
             </div>
-            <div class="partido">
+            <div class="partido" id="p1">
                 <p class="tit">Mac A - Zona de grupos</p>
                 <p class="subtit">Sábado 18-05</p>
                 <table class="result">
@@ -74,18 +76,44 @@
 
 
     <div id="barra">
-        <div><img src="img/ic1.png">
-            <p>PARTIDOS</p>
+        <div><img src="img/ic1.png" id="ic1">
+            <p><b>PARTIDOS</b></p>
         </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png">
+        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
             <P style="padding-top: 5px">POSICIONES</P>
         </div>
-        <div><img src="img/ic3.png">
+        <div><img src="img/ic3.png" id="ic3">
             <P>JUGADOR</P>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded',
+        function () {
+            console.log('El DOM  esta listo!');
+        })
 
+
+    $(document).ready(function () {
+        $("#ic1").click(() => {
+            window.location.replace('./index.html')
+        })
+        $("#ic2").click(() => {
+            window.location.replace('./categ1.html')
+        })
+        $("#ic3").click(() => {
+            window.location.replace('./buscar.html')
+        })
+
+
+        $("#p1").click(() => {
+            window.location.replace('./partido.html?id=' + 1)
+        })
+    })
+
+
+
+</script>
 
 
 </html>
