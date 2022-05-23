@@ -41,28 +41,25 @@
             <div style="border-bottom: solid gray 1px; width:100%"></div>
         </div><br><br>
         <div id="sec2">
-            <div style="border-bottom: solid gray 1px; width:100%; display: flex;">
-                <img src='img/dott.jpeg' class='imgRedonda2' />
-                <p style="margin-top: 10px; width: 70%"><b>ERNETA</b>, Luciana
-                </p>
-                <i class="fa fa-chevron-right" aria-hidden="true" style="margin-top: 10px" id="jugador"></i>
-            </div>
+
         </div>
 
     </div>
 
+    <div style="height: 80px;"></div>
 
 
-
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p>PARTIDOS</p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px">POSICIONES</P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P><b>JUGADOR</b></P>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
@@ -88,9 +85,49 @@
         $("#jugador").click(() => {
             window.location.replace('./jugador.html?id=' + 1)
         })
+
+        let json = JSON.stringify({
+            type: "C",
+            request: "JUGADORES",
+            id: "0",
+        });
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+
+        var dev = "";
+        var foto = ""
+        xhr.onload = function () {
+
+
+            var json = JSON.parse(xhr.response);
+            for (x of json) {
+                console.log(x.foto)
+                if (x.foto == "0") {
+                    foto = "http://181.167.109.74/admin_emiopen/fotos/foto.png"
+                } else {
+                    foto = "http://181.167.109.74/admin_emiopen/fotos/" + x.foto
+                }
+                dev = dev + "<div onclick='ir(" + x.id + ")' style='border - bottom: solid gray 1px; width: 100 %; display: flex;'>"
+                dev = dev + "<img src=" + foto + " class='imgRedonda2' />"
+                dev = dev + "<p style='margin-top: 10px; width: 70%'><b>" + x.apellido + "</b>, " + x.nombre
+                dev = dev + "</p>"
+                dev = dev + "<i class='fa fa-chevron-right' aria-hidden='true' style='margin-top: 10px' id='jugador' ></i>"
+                dev = dev + "</div> "
+                dev = dev + "<div style='border-bottom: solid gray 1px; margin-bottom: 10px; width: 100 % '></div>"
+                console.log(x);
+            }
+            $("#sec2").html(dev);
+
+        };
     })
 
-
+    function ir(id) {
+        window.location.replace('./jugador.html?id=' + id)
+    }
 
 
 
