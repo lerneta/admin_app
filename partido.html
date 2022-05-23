@@ -30,30 +30,14 @@
 
         <div class="sec2">
             <p class="encabezado"><b></b></p><br />
-            <div class="partido">
-                <p class="tit">Mac A - Zona de grupos</p>
-                <p class="subtit">Sábado 18-05</p>
-                <table class="result">
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </table>
+            <div id="partido1"></div>
 
-
-            </div>
 
         </div>
         <div class="sec3">
             <div>
                 <img src='img/dott.jpeg' class='imgRedonda' />
-                <p><b>ERNETA</b>, Luciana</p>
+                <p id="jug1"><b>ERNETA</b>, Luciana</p>
                 <p>28 años</p>
                 <div class="pais">
                     <img src="img/arg.jpeg"> ARG
@@ -61,7 +45,7 @@
             </div>
             <div>
                 <img src='img/dott.jpeg' class='imgRedonda' />
-                <p><b>ERNETA</b>, Luciana</p>
+                <p id="jug2"><b>ERNETA</b>, Luciana</p>
                 <p>28 años</p>
                 <div class="pais">
                     <img src="img/arg.jpeg"> ARG
@@ -88,8 +72,8 @@
 
 
             </div>
-            <div class="estadistica">
-                <div class="valores">
+            <div class="estadistica" id="sg">
+                <div class="valores" id="">
                     <p style="width:10%">0</p>
                     <p style="width:80%">Sets ganados</p>
                     <p style="width:10%">0</p>
@@ -109,20 +93,36 @@
 
     </div>
 
+    <div style="height: 120px"></div>
 
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p><b>PARTIDOS</b></p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px">POSICIONES</P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P>JUGADOR</P>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
 <script type="text/javascript">
+
+
+
+    var anuncioParam = 0;
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    anuncioParam = urlParams.get('id');
+    console.log(anuncioParam);
+
+
+
+
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -142,6 +142,65 @@
         $("#volver").click(() => {
             window.location.replace('./index.html')
         })
+
+        let xhr = new XMLHttpRequest();
+        let json
+        json = JSON.stringify({
+            type: "C",
+            request: "PARTIDOS",
+            idcomp: "0",
+            id: anuncioParam
+        });
+
+        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+
+        var dev = "";
+        xhr.onload = function () {
+            var json = JSON.parse(xhr.response);
+            for (x of json) {
+
+                dev = dev + "<div class='partido' id='" + x.id + "'>"
+                dev = dev + "<p class='tit'>Mac A - Zona de grupos</p>"
+                dev = dev + "<p class='subtit'>" + x.fecha + " " + x.hora + "</p>"
+                dev = dev + "<table class='result'>"
+                dev = dev + "<tr>"
+                dev = dev + "<td>" + x.jugador1 + "</td>"
+                dev = dev + "<td>" + x.ar1 + "</td>"
+                dev = dev + "<td>" + x.ar2 + "</td>"
+                dev = dev + " </tr>"
+                dev = dev + "<tr>"
+                dev = dev + "     <td>" + x.jugador2 + "</td>"
+                dev = dev + "    <td>" + x.br1 + "</td>"
+                dev = dev + "     <td>" + x.br2 + "</td>"
+                dev = dev + "  </tr>"
+                dev = dev + "</table>"
+                dev = dev + "</div>"
+                $("#jug1").html(x.jugador1);
+                $("#jug2").html(x.jugador2);
+            }
+            $("#partido1").html(dev);
+
+            var a = (x.ar1 / 6) + (x.ar2 / 6) + (x.ar3 / 6)
+            var b = (x.br1 / 6) + (x.br2 / 6) + (x.br3 / 6)
+
+            var c = (a * 100) / 2
+            var d = (b * 100) / 2
+
+
+
+            var sg = "<div class='valores'>"
+            sg = sg + "<p style='width:10%'>" + a + "</p>"
+            sg = sg + "<p style='width: 80%'>Sets ganados</p>"
+            sg = sg + "<p style='width: 10%'>" + b + "</p>";
+            sg = sg + "</div> <div class='barra'> <div class='izq' > <div style='width:" + c + "%;'></div> </div> <div class='der' > <div  style='width:" + d + "%;'></div>  </div> </div>"
+
+            $("#sg").html(sg);
+
+        }
+
     })
 
 </script>

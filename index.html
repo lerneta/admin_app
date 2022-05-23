@@ -23,71 +23,77 @@
     <div id="cuerpo">
         <div id="sec1">
             <p class="encabezado"><b>CATEGORIAS</b></p>
-            <div class="bot">
-                <div class="activo">Todas</div>
-                <div>Masc A</div>
-                <div>Masc B</div>
+            <div id="bot" class="bot" style="overflow-x:auto">
+
             </div>
         </div>
         <div id="sec2">
             <p class="encabezado"><b>PARTIDOS</b></p>
-
-            <div class="partido" id="p1">
-                <p class="tit">Mac A - Zona de grupos</p>
-                <p class="subtit">Sábado 18-05</p>
-                <table class="result">
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </table>
-
-
-            </div>
-            <div class="partido" id="p1">
-                <p class="tit">Mac A - Zona de grupos</p>
-                <p class="subtit">Sábado 18-05</p>
-                <table class="result">
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </table>
+            <div id="dev">
+                <div class="partido" id="p1">
+                    <p class="tit">Mac A - Zona de grupos</p>
+                    <p class="subtit">Sábado 18-05</p>
+                    <table class="result">
+                        <tr>
+                            <td><b>ERNETA</b>, Luciana</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><b>ERNETA</b>, Luciana</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </table>
 
 
+                </div>
+                <div class="partido" id="p1">
+                    <p class="tit">Mac A - Zona de grupos</p>
+                    <p class="subtit">Sábado 18-05</p>
+                    <table class="result">
+                        <tr>
+                            <td><b>ERNETA</b>, Luciana</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><b>ERNETA</b>, Luciana</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </table>
+
+
+                </div>
             </div>
         </div>
 
     </div>
 
+    <div style="height:80px;"></div>
 
-
-
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p><b>PARTIDOS</b></p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px">POSICIONES</P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P>JUGADOR</P>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
 <script type="text/javascript">
+    var anuncioParam = 0;
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    anuncioParam = urlParams.get('id');
+    console.log(anuncioParam);
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -105,13 +111,112 @@
             window.location.replace('./buscar.html')
         })
 
+        let xhr = new XMLHttpRequest();
+        let json
+
+
+
+        if (anuncioParam == null) {
+            json = JSON.stringify({
+                type: "C",
+                request: "PARTIDOS",
+                idcomp: "0",
+                id: "0"
+            });
+        } else {
+            json = JSON.stringify({
+                type: "C",
+                request: "PARTIDOS",
+                idcomp: anuncioParam,
+                id: "0"
+            });
+        }
+
+
+        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+
+        var dev = "";
+        xhr.onload = function () {
+            var json = JSON.parse(xhr.response);
+            for (x of json) {
+                if (x.estado != "Finalizado") {
+                    dev = dev + "<div class='partido' id='" + x.id + "' onclick='ir(" + x.id + ")'>"
+                    dev = dev + "<p class='tit'>Mac A - Zona de grupos</p>"
+                    dev = dev + "<p class='subtit'>" + x.fecha + " " + x.hora + "</p>"
+                    dev = dev + "<table class='result'>"
+                    dev = dev + "<tr>"
+                    dev = dev + "<td>" + x.jugador1 + "</td>"
+                    dev = dev + "<td>" + x.ar1 + "</td>"
+                    dev = dev + "<td>" + x.ar2 + "</td>"
+                    dev = dev + " </tr>"
+                    dev = dev + "<tr>"
+                    dev = dev + "     <td>" + x.jugador2 + "</td>"
+                    dev = dev + "    <td>" + x.br1 + "</td>"
+                    dev = dev + "     <td>" + x.br2 + "</td>"
+                    dev = dev + "  </tr>"
+                    dev = dev + "</table>"
+                    dev = dev + "</div>"
+                }
+            }
+            $("#dev").html(dev);
+        }
+
+
+
+        let xhr2 = new XMLHttpRequest();
+
+        let json2 = JSON.stringify({
+            type: "C",
+            request: "COMPETENCIAS",
+            id: "0",
+        });
+
+        xhr2.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr2.send(json2);
+
+        if (anuncioParam == null) {
+            var dev2 = "<div class='activo' onclick='index()'>Todas</div>";
+        } else {
+            var dev2 = "<div onclick='index()'>Todas</div>";
+        }
+        xhr2.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            for (x of json) {
+                if (x.estado == "Activo") {
+                    if (anuncioParam == x.id) {
+                        dev2 = dev2 + "<div class='activo' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                    } else {
+                        dev2 = dev2 + "<div onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                    }
+                }
+                console.log(x);
+            }
+            $("#bot").html(dev2);
+
+        };
+
+
+
 
         $("#p1").click(() => {
             window.location.replace('./partido.html?id=' + 1)
         })
     })
 
-
+    function traer(id) {
+        window.location.replace('./index.html?id=' + id);
+    }
+    function index() {
+        window.location.replace('./index.html');
+    }
+    function ir(id) {
+        window.location.replace('./partido.html?id=' + id);
+    }
 
 </script>
 

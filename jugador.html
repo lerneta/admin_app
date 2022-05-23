@@ -23,10 +23,10 @@
     <div id="cuerpo">
         <div class="sec3">
             <div style="margin: 0 auto 0 auto; padding-top: 20px;">
-                <img src='img/dott.jpeg' class='imgRedonda' />
-                <p><b>ERNETA</b>, Luciana</p>
+                <img src='img/dott.jpeg' id="img" class='imgRedonda' />
+                <p id="nombre"><b>ERNETA</b>, Luciana</p>
                 <p>28 años</p>
-                <div class="pais">
+                <div class="pais" id="pais">
                     <img src="img/arg.jpeg"> ARG
                 </div>
             </div>
@@ -115,6 +115,17 @@
     </div>
 </body>
 <script type="text/javascript">
+
+
+    var anuncioParam = 0;
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    anuncioParam = urlParams.get('id');
+    console.log(anuncioParam);
+
+
+
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -131,10 +142,58 @@
         $("#ic3").click(() => {
             window.location.replace('./buscar.html')
         })
+
+        let xhr = new XMLHttpRequest();
+
+        let json = JSON.stringify({
+            type: "C",
+            request: "JUGADORES",
+            id: anuncioParam
+        });
+
+        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+
+        var dev = "";
+        xhr.onload = function () {
+            var json = JSON.parse(xhr.response);
+            console.log(json);
+            var foto = ""
+            for (x of json) {
+                if (x.foto == "0") {
+                    foto = "http://181.167.109.74/admin_emiopen/fotos/foto.png"
+                } else {
+                    foto = "http://181.167.109.74/admin_emiopen/fotos/" + x.foto
+                }
+                document.all['img'].src = foto;
+                $("#nombre").html("<b>" + x.apellido + "</b>, " + x.nombre);
+                $("#pais").html("<img src='img/arg.jpeg'>" + x.nacionalidad);
+
+
+                nombre = x.nombre;
+                apellido = x.apellido;
+                dni = x.dni;
+                email = x.email;
+                instagram = x.instagram;
+                brazo_habil = x.bh
+                golpe_favorito = x.gp;
+                importe = x.importe;
+                dias = x.dj;
+                nacionalidad = x.nacionalidad;
+                pagoinscripcion = x.pi;
+                nacimiento = x.fn;
+                sexo = x.sexo;
+                foto = x.foto;
+                pp = x.pp
+            }
+        }
+
+
     })
 
 </script>
-
 
 
 </html>

@@ -10,6 +10,19 @@ p {
     padding: 0px !important;
 }
 
+.fixed {
+    position: fixed;
+    /*El div será ubicado con relación a la pantalla*/
+    left: 0px;
+    /*A la derecha deje un espacio de 0px*/
+    right: 0px;
+    /*A la izquierda deje un espacio de 0px*/
+    bottom: 0px;
+    /*Abajo deje un espacio de 0px*/
+
+    /*alto del div*/
+}
+
 #barra {
     background-color: #FFF;
     border-top: solid #F4F3F2 1px;
@@ -50,8 +63,10 @@ p {
 
 #top {
     text-align: center;
-    border-bottom: solid #4F4E4E 1px;
-    position: absolute;
+    border-bottom: solid #cdcdcd 1px;
+    position: fixed;
+    background: #f7f7f7;
+    z-index: 3;
     /*El div será ubicado con relación a la pantalla*/
     left: 0px;
     /*A la derecha deje un espacio de 0px*/
@@ -62,12 +77,16 @@ p {
 
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 #top img {
     position: relative;
-    width: 75px;
+    width: 68px;
 
     margin-top: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 #top i {
