@@ -30,10 +30,8 @@
     <div id="cuerpo">
         <div id="sec1">
             <p class="encabezado"><b>CATEGORIAS</b></p>
-            <div class="bot">
-                <div class="activo">Todas</div>
-                <div>Masc A</div>
-                <div>Masc B</div>
+            <div class="bot" id="bot">
+
             </div>
             <div class="bot2">
                 <div id="categ1">
@@ -186,19 +184,27 @@
     </div>
 
 
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p>PARTIDOS</p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px"><b>POSICIONES</b></P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P>JUGADOR</P>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
 <script type="text/javascript">
+    var anuncioParam = 0;
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    anuncioParam = urlParams.get('id');
+    console.log(anuncioParam);
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -217,18 +223,62 @@
         })
 
         $("#categ1").click(() => {
-            window.location.replace('./categ1.html')
+            window.location.replace('./categ1.html?id=' + anuncioParam)
         })
         $("#categ2").click(() => {
-            window.location.replace('./categ2.html')
+            window.location.replace('./categ2.html?id=' + anuncioParam)
         })
         $("#categ3").click(() => {
-            window.location.replace('./categ3.html')
+            window.location.replace('./categ3.html?id=' + anuncioParam)
         })
         $("#categ4").click(() => {
-            window.location.replace('./categ4.html')
+            window.location.replace('./categ4.html?id=' + anuncioParam)
         })
+        $("#categ5").click(() => {
+            window.location.replace('./categ5.html?id=' + anuncioParam)
+        })
+
+        let xhr2 = new XMLHttpRequest();
+
+        let json2 = JSON.stringify({
+            type: "C",
+            request: "COMPETENCIAS",
+            id: "0",
+        });
+
+        xhr2.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr2.send(json2);
+
+        if (anuncioParam == null) {
+            var dev2 = "<div class='activo' onclick='index()'>Todas</div>";
+        } else {
+            var dev2 = "<div onclick='index()'>Todas</div>";
+        }
+        xhr2.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            for (x of json) {
+                if (x.estado == "Activo") {
+                    if (anuncioParam == x.id) {
+                        dev2 = dev2 + "<div class='activo' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                    } else {
+                        dev2 = dev2 + "<div onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                    }
+                }
+                console.log(x);
+            }
+            $("#bot").html(dev2);
+
+        };
+
     })
+    function traer(id) {
+        window.location.replace('./categ1.html?id=' + id);
+    }
+    function index() {
+        window.location.replace('./categ1.html');
+    }
 
 </script>
 

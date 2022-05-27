@@ -152,7 +152,7 @@
             id: anuncioParam
         });
 
-        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
         xhr.send(json);
@@ -189,7 +189,11 @@
             var c = (a * 100) / 2
             var d = (b * 100) / 2
 
+            a = Math.floor(a)
+            b = Math.floor(b)
 
+            c = Math.floor(c)
+            d = Math.floor(d)
 
             var sg = "<div class='valores'>"
             sg = sg + "<p style='width:10%'>" + a + "</p>"

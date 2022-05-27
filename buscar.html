@@ -93,7 +93,7 @@
         });
 
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
         xhr.send(json);
@@ -107,9 +107,9 @@
             for (x of json) {
                 console.log(x.foto)
                 if (x.foto == "0") {
-                    foto = "http://181.167.109.74/admin_emiopen/fotos/foto.png"
+                    foto = "http://51.195.181.135/admin_emiopen/fotos/foto.png"
                 } else {
-                    foto = "http://181.167.109.74/admin_emiopen/fotos/" + x.foto
+                    foto = "http://51.195.181.135/admin_emiopen/fotos/" + x.foto
                 }
                 dev = dev + "<div onclick='ir(" + x.id + ")' style='border - bottom: solid gray 1px; width: 100 %; display: flex;'>"
                 dev = dev + "<img src=" + foto + " class='imgRedonda2' />"
