@@ -144,7 +144,7 @@
             for (x of json) {
                 if (x.estado != "Finalizado") {
                     dev = dev + "<div class='partido' id='" + x.id + "' onclick='ir(" + x.id + ")'>"
-                    dev = dev + "<p class='tit'>Mac A - Zona de grupos</p>"
+                    dev = dev + "<p class='tit'><b>Mac A - Zona de grupos</b></p>"
                     dev = dev + "<p class='subtit'>" + x.fecha + " " + x.hora + "</p>"
                     dev = dev + "<table class='result'>"
                     dev = dev + "<tr>"
@@ -182,7 +182,7 @@
         if (anuncioParam == null) {
             var dev2 = "<div class='activo' onclick='index()'>Todas</div>";
         } else {
-            var dev2 = "<div onclick='index()'>Todas</div>";
+            var dev2 = "<div  style='color:#797979' onclick='index()'>Todas</div>";
         }
         xhr2.onload = function () {
             var json = JSON.parse(xhr2.response);
@@ -191,7 +191,7 @@
                     if (anuncioParam == x.id) {
                         dev2 = dev2 + "<div class='activo' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
                     } else {
-                        dev2 = dev2 + "<div onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                        dev2 = dev2 + "<div style='color:#797979' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
                     }
                 }
                 console.log(x);
