@@ -63,7 +63,20 @@
                 </p>
             </div>
             <div class="barra">
-                <div class="der" style="width:100%;margin-top: 0px; padding:0px;">
+                <div class="der" id="der" style="width:100%;margin-top: 0px; padding:0px;">
+                    <div></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="estadistica">
+            <div class="valores">
+                <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Torneos jugados
+                </p>
+            </div>
+            <div class="barra">
+                <div class="der" id="ter" style="width:100%;margin-top: 0px; padding:0px;">
                     <div></div>
                 </div>
             </div>
@@ -76,40 +89,86 @@
                 </p>
             </div>
             <div class="barra">
-                <div class="der" style="width:100%;margin-top: 0px; padding:0px;">
+                <div class="der" id="tit" style="width:100%;margin-top: 0px; padding:0px;">
                     <div></div>
                 </div>
             </div>
-
-
         </div>
+
         <div class="estadistica">
             <div class="valores">
                 <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Partidos jugados
                 </p>
             </div>
             <div class="barra">
-                <div class="der" style="width:100%;margin-top: 0px; padding:0px;">
+                <div class="der" id="pj" style="width:100%;margin-top: 0px; padding:0px;">
                     <div></div>
                 </div>
             </div>
-
-
         </div>
+
+        <div class="estadistica">
+            <div class="valores">
+                <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Partidos ganados
+                </p>
+            </div>
+            <div class="barra">
+                <div class="der" id="pg" style="width:100%;margin-top: 0px; padding:0px;">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="estadistica">
+            <div class="valores">
+                <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Set Ganados
+                </p>
+            </div>
+            <div class="barra">
+                <div class="der" id="sg" style="width:100%;margin-top: 0px; padding:0px;">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="estadistica">
+            <div class="valores">
+                <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Games ganados
+                </p>
+            </div>
+            <div class="barra">
+                <div class="der" id="gg" style="width:100%;margin-top: 0px; padding:0px;">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="estadistica">
+            <div class="valores">
+                <p style="width:100%; margin-left: 25px; padding: 0px; margin:0px;">Games perdidos
+                </p>
+            </div>
+            <div class="barra">
+                <div class="der" id="gp" style="width:100%;margin-top: 0px; padding:0px;">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <div style="height: 70px"></div>
 
-    </div>
-
-
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p>PARTIDOS</p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px">POSICIONES</P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P><b>JUGADOR</b></P>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
@@ -150,7 +209,7 @@
             id: anuncioParam
         });
 
-        xhr.open("POST", 'http://181.167.109.74/tenis_API/default.aspx')
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
         xhr.send(json);
@@ -162,9 +221,9 @@
             var foto = ""
             for (x of json) {
                 if (x.foto == "0") {
-                    foto = "http://181.167.109.74/admin_emiopen/fotos/foto.png"
+                    foto = "http://51.195.181.135/admin_emiopen/fotos/foto.png"
                 } else {
-                    foto = "http://181.167.109.74/admin_emiopen/fotos/" + x.foto
+                    foto = "http://51.195.181.135/admin_emiopen/fotos/" + x.foto
                 }
                 document.all['img'].src = foto;
                 $("#nombre").html("<b>" + x.apellido + "</b>, " + x.nombre);
@@ -189,6 +248,42 @@
             }
         }
 
+
+        let xhr2 = new XMLHttpRequest();
+
+        let json2 = JSON.stringify({
+            type: "C",
+            request: "ESTADISTICA_DESEMPEÑO",
+            id: anuncioParam
+        });
+        xhr2.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr2.send(json2);
+
+        var dev = "";
+        var ter = ""
+        xhr2.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            console.log(json);
+            var foto = ""
+            for (x of json) {
+                ter = "<div>" + x.torneos + "</div>"
+                tit = "<div>" + x.titulos + "</div>"
+                pg = "<div>" + x.pg + "</div>"
+                pj = "<div>" + x.pj + "</div>"
+                sg = "<div>" + x.SG + "</div>"
+                gp = "<div>" + x.gp + "</div>"
+                gg = "<div>" + x.GG + "</div>"
+            }
+            $("#ter").html(ter);
+            $("#tit").html(tit);
+            $("#pg").html(pg);
+            $("#pj").html(pj);
+            $("#sg").html(sg);
+            $("#gp").html(pg);
+            $("#gg").html(gg);
+        }
 
     })
 

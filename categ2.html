@@ -233,6 +233,51 @@
 
         };
 
+        let xhr = new XMLHttpRequest();
+        var idcomp = 0
+
+        if (anuncioParam == null) {
+            idcomp = 0;
+        } else {
+            idcomp = anuncioParam;
+        }
+
+        let json = JSON.stringify({
+            type: "C",
+            request: "PARTIDO_INSTANCIA",
+            id: "0",
+            idcomp: idcomp,
+            instancia: "8"
+        });
+
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+        var dev4 = ""
+        xhr.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            console.log(json);
+            for (x of json) {
+                dev4 = dev4 + "<div class='partido' style='position: relative; z-index: 1'>"
+                dev4 = dev4 + "<table style='width: 100%; border: solid black 1px;'>"
+                dev4 = dev4 + "   <tr>"
+                dev4 = dev4 + "      <td><b>" + x.jugador1 + "</b></td>"
+                dev4 = dev4 + "      <td>" + x.a1 + "</td>"
+                dev4 = dev4 + "    <td>" + x.a2 + "</td>"
+                dev4 = dev4 + " </tr>"
+                dev4 = dev4 + "  <tr>"
+                dev4 = dev4 + "      <td><b>" + x.jugador2 + "</b></td>"
+                dev4 = dev4 + "       <td>" + x.b1 + "</td>"
+                dev4 = dev4 + "        <td>" + x.b2 + "</td>"
+                dev4 = dev4 + "       </tr>"
+                dev4 = dev4 + " </table>"
+                dev4 = dev4 + " </div>"
+            }
+            $("#sec2").html(dev4);
+
+        };
+
     })
     function traer(id) {
         window.location.replace('./categ2.html?id=' + id);

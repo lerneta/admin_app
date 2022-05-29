@@ -37,17 +37,24 @@
         <div class="sec3">
             <div>
                 <img src='img/dott.jpeg' class='imgRedonda' />
-                <p id="jug1"><b>ERNETA</b>, Luciana</p>
-                <p>28 años</p>
-                <div class="pais">
+                <div style="display:flex; text-align: center; width: 100%; margin-top:0px;padding-top:0px">
+                    <p id="apellido1" style="text-align: center; width: 100%; text-align:right"><b>ERNETA</b></p>
+                    <p id="nombre1" style="text-align: center; width: 100%; text-align:left">, Luciana</p>
+                </div>
+
+                <p id="edad1">28 años</p>
+                <div class="pais" id="pais1">
                     <img src="img/arg.jpeg"> ARG
                 </div>
             </div>
             <div>
                 <img src='img/dott.jpeg' class='imgRedonda' />
-                <p id="jug2"><b>ERNETA</b>, Luciana</p>
-                <p>28 años</p>
-                <div class="pais">
+                <div style="display:flex; text-align: center; width: 100%;margin-top:0px;padding-top:0px">
+                    <p id="apellido2" style="text-align: center; width: 100%; text-align:right"><b>ERNETA</b></p>
+                    <p id="nombre2" style="text-align: center; width: 100%; ; text-align:left">, Luciana</p>
+                </div>
+                <p id="edad2">28 años</p>
+                <div class="pais" id="pais2">
                     <img src="img/arg.jpeg"> ARG
                 </div>
             </div>
@@ -57,37 +64,63 @@
 
             <div class="estadistica">
                 <div class="valores">
-                    <p style="width:10%">0</p>
+                    <p id="pg1" style="width:10%">0</p>
                     <p style="width:80%">Partidos Ganados</p>
-                    <p style="width:10%">0</p>
+                    <p id="pg2" style="width:10%">0</p>
                 </div>
                 <div class="barra">
-                    <div class="izq">
+                    <div id="pgg1" class="izq">
                         <div></div>
                     </div>
-                    <div class="der">
+                    <div id="pgg2" class="der">
                         <div></div>
                     </div>
                 </div>
-
-
             </div>
-            <div class="estadistica" id="sg">
+            <div class="estadistica">
                 <div class="valores" id="">
-                    <p style="width:10%">0</p>
+                    <p id="sg1" style="width:10%">0</p>
                     <p style="width:80%">Sets ganados</p>
-                    <p style="width:10%">0</p>
+                    <p idg="sg2" style="width:10%">0</p>
                 </div>
                 <div class="barra">
-                    <div class="izq">
+                    <div id="sgg1" class="izq">
                         <div></div>
                     </div>
-                    <div class="der">
+                    <div id="sgg2" class="der">
                         <div></div>
                     </div>
                 </div>
-
-
+            </div>
+            <div class="estadistica">
+                <div class="valores" id="">
+                    <p id="sp1" style="width:10%">0</p>
+                    <p style="width:80%">Sets Perdidos</p>
+                    <p idg="sp2" style="width:10%">0</p>
+                </div>
+                <div class="barra">
+                    <div id="spp1" class="izq">
+                        <div></div>
+                    </div>
+                    <div id="spp2" class="der">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="estadistica">
+                <div class="valores" id="">
+                    <p id="tbg1" style="width:10%">0</p>
+                    <p style="width:80%">Sets Perdidos</p>
+                    <p idg="tbg2" style="width:10%">0</p>
+                </div>
+                <div class="barra">
+                    <div id="tbgg1" class="izq">
+                        <div></div>
+                    </div>
+                    <div id="tbgg2" class="der">
+                        <div></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -111,7 +144,8 @@
 </body>
 <script type="text/javascript">
 
-
+    var id_1 = 0;
+    var id_2 = 0;
 
     var anuncioParam = 0;
 
@@ -205,6 +239,163 @@
 
         }
 
+        let xhr2 = new XMLHttpRequest();
+        let json2
+        json2 = JSON.stringify({
+            type: "C",
+            request: "PARTIDO_DATOS",
+            id: anuncioParam
+        });
+
+        xhr2.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr2.send(json2);
+
+        var nombre1 = "";
+        var apellido1 = "";
+        var nombre2 = "";
+        var apellido2 = "";
+
+        var edad1 = 0;
+        var edad2 = 0;
+
+        var pais1 = "";
+        var pais2 = "";
+
+
+
+        var contador = 0
+
+        xhr2.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            console.log(json)
+            for (x of json) {
+
+                if (contador == 1) {
+                    nombre1 = x.nombre;
+                    apellido1 = x.apellido;
+                    edad1 = x.edad;
+                    pais1 = x.pais;
+                    id_1 = x.id;
+
+                } else {
+                    nombre2 = x.nombre;
+                    apellido2 = x.apellido;
+                    edad2 = x.edad;
+                    pais2 = x.pais;
+                    id_2 = x.id;
+
+                }
+                contador = 1;
+
+            }
+            $("#nombre1").html(', ' + nombre1);
+            $("#apellido1").html(apellido1);
+            $("#nombre2").html(', ' + nombre2);
+            $("#apellido2").html(apellido2);
+
+            $("#edad1").html(edad1 + " años");
+            $("#edad2").html(edad2 + " años");
+
+            $("#pais1").html("<img src='img/arg.jpeg'>" + pais1);
+            $("#pais2").html("<img src='img/arg.jpeg'>" + pais2);
+
+
+
+            let xhr3 = new XMLHttpRequest();
+
+            let json3
+            json3 = JSON.stringify({
+                type: "C",
+                request: "ESTADISTICA_ENFRENTAMIENTO",
+                id1: id_1,
+                id2: id_2
+            });
+
+            console.log(json3)
+            xhr3.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+            xhr3.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+            xhr3.send(json3);
+
+            var contador = 0
+
+            var pg1 = 0
+            var PG2 = 0
+            var SG1 = 0
+            var SG2 = 0
+            var SP1 = 0
+            var SP2 = 0
+
+            var TBG1 = 0
+            var TBG2 = 0
+
+            var totpg = 0;
+            var totsg = 0;
+            var totsp = 0;
+
+
+
+            xhr3.onload = function () {
+                var json = JSON.parse(xhr3.response);
+                console.log(json);
+                for (x of json) {
+                    totpg = x.PG1 + x.PG2;
+                    totsg = x.SG1 + x.SG2;
+                    totsp = x.SP1 + x.SP2;
+                    totTBG = x.TBG1 + x.TBG1;
+
+                    $("#pg1").html(x.PG1);
+                    $("#pg2").html(x.PG2);
+
+                    if (totpg > 0) {
+                        $("#pgg1").html("<div style='width:" + (x.PG1 * 100) / totpg + "%'></div>");
+                        $("#pgg2").html("<div style='width:" + (x.PG2 * 100) / totpg + "%'></div>");
+                    } else {
+                        $("#pgg1").html("<div style='width:0%'></div>");
+                        $("#pgg2").html("<div style='width:0%'></div>");
+                    }
+                    $("#sg1").html(x.SG1);
+                    $("#sg2").html(x.SG2);
+
+                    if (totsg > 0) {
+                        $("#sgg1").html("<div style='width:" + (x.SG1 * 100) / totsg + "%'></div>");
+                        $("#sgg2").html("<div style='width:" + (x.SG2 * 100) / totsg + "%'></div>");
+                    } else {
+                        $("#sgg1").html("<div style='width:0%'></div>");
+                        $("#sgg2").html("<div style='width:0%'></div>");
+
+                    }
+
+                    $("#sp1").html(x.SP1);
+                    $("#sp2").html(x.SP2);
+
+                    if (totsp > 0) {
+                        $("#spp1").html("<div style='width:" + (x.SP1 * 100) / totsp + "%'></div>");
+                        $("#spp2").html("<div style='width:" + (x.SP2 * 100) / totsp + "%'></div>");
+                    } else {
+                        $("#spp1").html("<div style='width:0%'></div>");
+                        $("#spp2").html("<div style='width:0%'></div>");
+                    }
+
+                    $("#tbg1").html(x.TBG1);
+                    $("#tbg2").html(x.TBG2);
+
+                    if (totTBG > 0) {
+                        $("#tbgg1").html("<div style='width:" + (x.TBG1 * 100) / totTBG + "%'></div>");
+                        $("#tbgg2").html("<div style='width:" + (x.TBG2 * 100) / totTBG + "'%></div>");
+                    } else {
+                        $("#tbgg1").html("<div style='width:0%'></div>");
+                        $("#tbgg2").html("<div style='width:0%'></div>");
+
+                    }
+
+                }
+                //$("#nombre1").html(', ' + nombre1);
+
+            }
+        }
     })
 
 </script>
