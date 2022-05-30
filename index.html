@@ -105,7 +105,7 @@
             window.location.replace('./index.html')
         })
         $("#ic2").click(() => {
-            window.location.replace('./categ1.html')
+            window.location.replace('./categ1.html?id=0')
         })
         $("#ic3").click(() => {
             window.location.replace('./buscar.html')
@@ -144,7 +144,7 @@
             for (x of json) {
                 if (x.estado != "Finalizado") {
                     dev = dev + "<div class='partido' id='" + x.id + "' onclick='ir(" + x.id + ")'>"
-                    dev = dev + "<p class='tit'><b>Mac A - Zona de grupos</b></p>"
+                    dev = dev + "<p class='tit'><b>" + x.nombrecompetencia + "</b></p>"
                     dev = dev + "<p class='subtit'>" + x.fecha + " " + x.hora + "</p>"
                     dev = dev + "<table class='result'>"
                     dev = dev + "<tr>"

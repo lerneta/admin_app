@@ -182,7 +182,7 @@
         </div>
 
     </div>
-
+    <div style="height: 80px;"></div>
 
     <div class="fixed">
         <div id="barra">
@@ -216,7 +216,7 @@
             window.location.replace('./index.html')
         })
         $("#ic2").click(() => {
-            window.location.replace('./categ1.html')
+            window.location.replace('./categ1.html?id=0')
         })
         $("#ic3").click(() => {
             window.location.replace('./buscar.html')
@@ -251,7 +251,7 @@
 
         xhr2.send(json2);
 
-        if (anuncioParam == null) {
+        if (anuncioParam == 0) {
             var dev2 = "<div class='activo' onclick='index()'>Todas</div>";
         } else {
             var dev2 = "<div onclick='index()'>Todas</div>";
@@ -272,12 +272,92 @@
 
         };
 
+        let xhr = new XMLHttpRequest();
+        var idcomp = 0
+
+
+        idcomp = anuncioParam;
+
+        let json = JSON.stringify({
+            type: "C",
+            request: "ESTADISTICA_GRUPOS",
+            idcomp: anuncioParam
+        });
+
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+        console.log("json", json)
+        var dev4 = ""
+        var ultima = 0
+        var contador = 1
+        xhr.onload = function () {
+            var json = JSON.parse(xhr.response);
+            console.log("dev", json);
+            for (x of json) {
+
+                if (ultima == 0) {
+                    dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
+                    dev4 = dev4 + "<div class='partido' onclick='grupo(" + x.idcompetencia + ")' style='margin-top:0px'>"
+                    dev4 = dev4 + " <table class='table33' style='border:white'>"
+                    dev4 = dev4 + "  <thead>"
+                    dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                    dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                    dev4 = dev4 + "   <td>" + contador + "</td>"
+                    dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                    dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                    dev4 = dev4 + "    <td>" + x.pg + "</td>"
+
+                    dev4 = dev4 + " </tr>"
+                    contador = contador + 1;
+                    ultima = x.idcompetencia;
+                } else {
+                    if (ultima != x.idcompetencia) {
+                        contador = 1;
+                        dev4 = dev4 + " </table>"
+                        dev4 = dev4 + " </div>"
+                        dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
+                        dev4 = dev4 + "<div class='partido' onclick='grupo(" + x.idcompetencia + ")' style='margin-top:0px'>"
+                        dev4 = dev4 + " <table class='table33' style='border:white'>"
+                        dev4 = dev4 + "  <thead>"
+                        dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                        dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                        dev4 = dev4 + "   <td>" + contador + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + " </tr>"
+                        contador = contador + 1;
+                        ultima = x.idcompetencia;
+
+                    } else {
+                        dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                        dev4 = dev4 + "   <td>" + contador + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + " </tr>"
+                        contador = contador + 1;
+                        ultima = x.idcompetencia;
+                    }
+                }
+            }
+            dev4 = dev4 + " </table>"
+            dev4 = dev4 + " </div>"
+            $("#sec2").html(dev4);
+
+        };
+
     })
     function traer(id) {
         window.location.replace('./categ1.html?id=' + id);
     }
     function index() {
-        window.location.replace('./categ1.html');
+        window.location.replace('./categ1.html?id=0');
+    }
+    function grupo(id) {
+        window.location.replace('./grupo.html?id=' + id);
     }
 
 </script>

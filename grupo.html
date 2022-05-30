@@ -20,120 +20,46 @@
 
 <body style="font-family: 'Roboto', sans-serif;">
     <div id="top">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        <img src='img/volver.svg' class="volver" id='volver'></img>
         <img src="logo.svg">
     </div>
 
 
     <div id="cuerpo">
+
         <div id="sec2">
-            <p class="encabezado"><b>GRUPO A</b></p>
-            <div class="partido">
-                <table class=" table33" style="border:white">
-                    <thead>
-                        <tr style="border:white; FONT-SIZE: 10PX; text-align:center">
-                            <td></td>
-                            <td></td>
-                            <td>PJ</td>
-                            <td>PG</td>
-                            <td>PP</td>
-                            <td>DS</td>
-                            <td>SG</td>
-                            <td>SP</td>
-                            <td>DG</td>
-                            <td>GG</td>
-                            <td>GP</td>
-                        </tr>
-                    </thead>
-                    <tr style="border:white;  FONT-SIZE: 10PX; text-align:center">
-                        <td>1</td>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr style="border:white;  FONT-SIZE: 10PX; text-align:center">
-                        <td>2</td>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
 
-                    </tr>
-                </table>
-
-
-            </div>
 
         </div>
-        <div id="sec2">
-            <p class="encabezado"><b>PARTIDOS</b></p>
-            <div class="partido">
-                <p class="tit">Mac A - Zona de grupos</p>
-                <p class="subtit">Sábado 18-05</p>
-                <table class="result">
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </table>
+        <br />
+        <div id="dev">
 
-
-            </div>
-            <div class="partido">
-                <p class="tit">Mac A - Zona de grupos</p>
-                <p class="subtit">Sábado 18-05</p>
-                <table class="result">
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </table>
-
-
-            </div>
         </div>
 
     </div>
 
-
-    <div id="barra">
-        <div><img src="img/ic1.png" id="ic1">
-            <p>PARTIDOS</p>
-        </div>
-        <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
-            <P style="padding-top: 5px"><b>POSICIONES</b></P>
-        </div>
-        <div><img src="img/ic3.png" id="ic3">
-            <P>JUGADOR</P>
+    <div style="height: 80px"></div>
+    <div class="fixed">
+        <div id="barra">
+            <div><img src="img/ic1.png" id="ic1">
+                <p><b>PARTIDOS</b></p>
+            </div>
+            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+                <P style="padding-top: 5px">POSICIONES</P>
+            </div>
+            <div><img src="img/ic3.png" id="ic3">
+                <P>JUGADOR</P>
+            </div>
         </div>
     </div>
 </body>
 <script type="text/javascript">
+    var anuncioParam = 0;
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    anuncioParam = urlParams.get('id');
+    console.log(anuncioParam);
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -145,12 +71,143 @@
             window.location.replace('./index.html')
         })
         $("#ic2").click(() => {
-            window.location.replace('./categ1.html')
+            window.location.replace('./categ1.html?id=0')
         })
         $("#ic3").click(() => {
             window.location.replace('./buscar.html')
         })
+        $("#volver").click(() => {
+            window.location.replace('./categ1.html?id=0')
+        })
+
+        let xhr = new XMLHttpRequest();
+        var idcomp = 0
+
+
+        idcomp = anuncioParam;
+
+        let json = JSON.stringify({
+            type: "C",
+            request: "ESTADISTICA_GRUPOS",
+            idcomp: anuncioParam
+        });
+
+        xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.send(json);
+        console.log("json", json)
+        var dev4 = ""
+        var ultima = 0
+        var contador = 1
+        xhr.onload = function () {
+            var json = JSON.parse(xhr.response);
+            console.log("dev", json);
+            for (x of json) {
+
+                if (ultima == 0) {
+                    dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
+                    dev4 = dev4 + "<div class='partido'  style='margin-top:0px'>"
+                    dev4 = dev4 + " <table class='table33' style='border:white'>"
+                    dev4 = dev4 + "  <thead>"
+                    dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                    dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                    dev4 = dev4 + "   <td>" + contador + "</td>"
+                    dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                    dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                    dev4 = dev4 + "    <td>" + x.pg + "</td>"
+
+                    dev4 = dev4 + " </tr>"
+                    contador = contador + 1;
+                    ultima = x.idcompetencia;
+                } else {
+                    if (ultima != x.idcompetencia) {
+                        contador = 1;
+                        dev4 = dev4 + " </table>"
+                        dev4 = dev4 + " </div>"
+                        dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
+                        dev4 = dev4 + "<div class='partido' style='margin-top:0px'>"
+                        dev4 = dev4 + " <table class='table33' style='border:white'>"
+                        dev4 = dev4 + "  <thead>"
+                        dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                        dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                        dev4 = dev4 + "   <td>" + contador + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + " </tr>"
+                        contador = contador + 1;
+                        ultima = x.idcompetencia;
+
+                    } else {
+                        dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                        dev4 = dev4 + "   <td>" + contador + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + " </tr>"
+                        contador = contador + 1;
+                        ultima = x.idcompetencia;
+                    }
+                }
+            }
+            dev4 = dev4 + " </table>"
+            dev4 = dev4 + " </div>"
+            $("#sec2").html(dev4);
+
+        };
+
+
+        let xhr2 = new XMLHttpRequest();
+        let json2
+
+
+
+
+        json2 = JSON.stringify({
+            type: "C",
+            request: "PARTIDOS",
+            idcomp: anuncioParam,
+            id: "0"
+        });
+
+
+
+        xhr2.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
+        xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr2.send(json2);
+
+        var dev = "";
+        xhr2.onload = function () {
+            var json = JSON.parse(xhr2.response);
+            for (x of json) {
+
+                dev = dev + "<div class='partido' id='" + x.id + "' onclick='ir(" + x.id + ")'>"
+                dev = dev + "<p class='tit'><b>" + x.nombrecompetencia + "</b></p>"
+                dev = dev + "<p class='subtit'>" + x.fecha + " " + x.hora + "</p>"
+                dev = dev + "<table class='result'>"
+                dev = dev + "<tr>"
+                dev = dev + "<td>" + x.jugador1 + "</td>"
+                dev = dev + "<td>" + x.ar1 + "</td>"
+                dev = dev + "<td>" + x.ar2 + "</td>"
+                dev = dev + " </tr>"
+                dev = dev + "<tr>"
+                dev = dev + "     <td>" + x.jugador2 + "</td>"
+                dev = dev + "    <td>" + x.br1 + "</td>"
+                dev = dev + "     <td>" + x.br2 + "</td>"
+                dev = dev + "  </tr>"
+                dev = dev + "</table>"
+                dev = dev + "</div>"
+
+            }
+            $("#dev").html(dev);
+        }
+
     })
+    function ir(id) {
+        window.location.replace('./partido.html?id=' + id);
+    }
 
 </script>
 
