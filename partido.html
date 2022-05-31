@@ -36,7 +36,8 @@
         </div>
         <div class="sec3">
             <div>
-                <img src='img/dott.jpeg' class='imgRedonda' />
+                <div id="jug1"></div>
+
                 <div style="display:flex; text-align: center; width: 100%; margin-top:0px;padding-top:0px">
                     <p id="apellido1" style="text-align: center; width: 100%; text-align:right"><b>ERNETA</b></p>
                     <p id="nombre1" style="text-align: center; width: 100%; text-align:left">, Luciana</p>
@@ -48,7 +49,8 @@
                 </div>
             </div>
             <div>
-                <img src='img/dott.jpeg' class='imgRedonda' />
+                <div id="jug2"></div>
+
                 <div style="display:flex; text-align: center; width: 100%;margin-top:0px;padding-top:0px">
                     <p id="apellido2" style="text-align: center; width: 100%; text-align:right"><b>ERNETA</b></p>
                     <p id="nombre2" style="text-align: center; width: 100%; ; text-align:left">, Luciana</p>
@@ -266,6 +268,8 @@
 
 
         var contador = 0
+        var foto1 = "";
+        var foto2 = "";
 
         xhr2.onload = function () {
             var json = JSON.parse(xhr2.response);
@@ -278,6 +282,7 @@
                     edad1 = x.edad;
                     pais1 = x.pais;
                     id_1 = x.id;
+                    foto1 = x.foto;
 
                 } else {
                     nombre2 = x.nombre;
@@ -285,7 +290,7 @@
                     edad2 = x.edad;
                     pais2 = x.pais;
                     id_2 = x.id;
-
+                    foto2 = x.foto;
                 }
                 contador = 1;
 
@@ -301,7 +306,8 @@
             $("#pais1").html("<img src='img/arg.jpeg'>" + pais1);
             $("#pais2").html("<img src='img/arg.jpeg'>" + pais2);
 
-
+            $("#jug1").html("<img style='margin-left: 40px' src='http://51.195.181.135/admin_emiopen/fotos/" + foto1 + "' class='imgRedonda' />");
+            $("#jug2").html("<img style='margin-left:20px'  src='http://51.195.181.135/admin_emiopen/fotos/" + foto2 + "' class='imgRedonda' />");
 
             let xhr3 = new XMLHttpRequest();
 
