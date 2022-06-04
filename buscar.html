@@ -30,7 +30,7 @@
         <div id="sec1">
             <p class="encabezado"><b>JUGADOR</b></p>
             <div class="input-wrapper">
-                <input type="search" class="input" placeholder="Buscar">
+                <input type="search" class="input" onchange="buscar(this.value)" placeholder="Buscar">
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -64,6 +64,7 @@
     </div>
 </body>
 <script type="text/javascript">
+    var response = []
     window.addEventListener('DOMContentLoaded',
         function () {
             console.log('El DOM  esta listo!');
@@ -104,6 +105,7 @@
 
 
             var json = JSON.parse(xhr.response);
+            response = json;
             for (x of json) {
                 console.log(x.foto)
                 if (x.foto == "0") {
@@ -129,7 +131,32 @@
         window.location.replace('./jugador.html?id=' + id)
     }
 
+    function buscar(value) {
+        $("#sec2").html("");
 
+        const JUGADORES = response.filter((m) => (m.nombre.includes(value) == true) || (m.apellido.includes(value) == true));
+        console.log(JUGADORES)
+
+        var dev = "";
+        for (x of JUGADORES) {
+            console.log(x.foto)
+            if (x.foto == "0") {
+                foto = "http://51.195.181.135/admin_emiopen/fotos/foto.png"
+            } else {
+                foto = "http://51.195.181.135/admin_emiopen/fotos/" + x.foto
+            }
+            dev = dev + "<div onclick='ir(" + x.id + ")' style='border - bottom: solid gray 1px; width: 100 %; display: flex;'>"
+            dev = dev + "<img src=" + foto + " class='imgRedonda2' />"
+            dev = dev + "<p style='margin-top: 10px; width: 70%'><b>" + x.apellido + "</b>, " + x.nombre
+            dev = dev + "</p>"
+            dev = dev + "<img src='img/ir.svg' style='margin-top: -10px; width: 16px' id='jugador' ></img>"
+            dev = dev + "</div> "
+            dev = dev + "<div style='border-bottom: solid gray 1px; margin-bottom: 10px; width: 100 % '></div>"
+            console.log(x);
+        }
+        $("#sec2").html(dev);
+
+    }
 
 </script>
 

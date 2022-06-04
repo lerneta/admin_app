@@ -88,8 +88,8 @@
 
         let json = JSON.stringify({
             type: "C",
-            request: "ESTADISTICA_GRUPOS",
-            idcomp: anuncioParam
+            request: "ESTADISTICAS",
+            id: anuncioParam
         });
 
         xhr.open("POST", 'http://51.195.181.135/tenis_API/default.aspx')
@@ -102,6 +102,10 @@
         var contador = 1
         xhr.onload = function () {
             var json = JSON.parse(xhr.response);
+            json.sort((a, b) => {
+                return b.pg - a.pg;
+            });
+            console.log("joson", json);
             console.log("dev", json);
             for (x of json) {
 
@@ -110,13 +114,18 @@
                     dev4 = dev4 + "<div class='partido'  style='margin-top:0px'>"
                     dev4 = dev4 + " <table class='table33' style='border:white'>"
                     dev4 = dev4 + "  <thead>"
-                    dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                    dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td>  <td>PJ</td><td>PG</td><td>PP</td><td>DS</td><td>SG</td><td>SP</td><td>DG</td><td>GP</td></tr></thead>"
                     dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
                     dev4 = dev4 + "   <td>" + contador + "</td>"
-                    dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
-                    dev4 = dev4 + "   <td>" + x.pj + "</td>"
-                    dev4 = dev4 + "    <td>" + x.pg + "</td>"
-
+                    dev4 = dev4 + "  <td><b> " + x.nombre + "</td>"
+                    dev4 = dev4 + "   <td>" + x.PJ + "</td>"
+                    dev4 = dev4 + "    <td>" + x.PG + "</td>"
+                    dev4 = dev4 + "    <td>" + x.PP + "</td>"
+                    dev4 = dev4 + "    <td>" + x.DS + "</td>"
+                    dev4 = dev4 + "    <td>" + x.SG + "</td>"
+                    dev4 = dev4 + "    <td>" + x.SP + "</td>"
+                    dev4 = dev4 + "    <td>" + x.DG + "</td>"
+                    dev4 = dev4 + "    <td>" + x.GP + "</td>"
                     dev4 = dev4 + " </tr>"
                     contador = contador + 1;
                     ultima = x.idcompetencia;
@@ -132,9 +141,15 @@
                         dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
                         dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
                         dev4 = dev4 + "   <td>" + contador + "</td>"
-                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
-                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
-                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.PJ + "</td>"
+                        dev4 = dev4 + "    <td>" + x.PG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.PP + "</td>"
+                        dev4 = dev4 + "    <td>" + x.DS + "</td>"
+                        dev4 = dev4 + "    <td>" + x.SG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.SP + "</td>"
+                        dev4 = dev4 + "    <td>" + x.DG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.GP + "</td>"
                         dev4 = dev4 + " </tr>"
                         contador = contador + 1;
                         ultima = x.idcompetencia;
@@ -142,9 +157,15 @@
                     } else {
                         dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
                         dev4 = dev4 + "   <td>" + contador + "</td>"
-                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
-                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
-                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                        dev4 = dev4 + "  <td><b>" + x.nombre + "</td>"
+                        dev4 = dev4 + "   <td>" + x.PJ + "</td>"
+                        dev4 = dev4 + "    <td>" + x.PG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.PP + "</td>"
+                        dev4 = dev4 + "    <td>" + x.DS + "</td>"
+                        dev4 = dev4 + "    <td>" + x.SG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.SP + "</td>"
+                        dev4 = dev4 + "    <td>" + x.DG + "</td>"
+                        dev4 = dev4 + "    <td>" + x.GP + "</td>"
                         dev4 = dev4 + " </tr>"
                         contador = contador + 1;
                         ultima = x.idcompetencia;
@@ -181,6 +202,7 @@
         var dev = "";
         xhr2.onload = function () {
             var json = JSON.parse(xhr2.response);
+
             for (x of json) {
 
                 dev = dev + "<div class='partido' id='" + x.id + "' onclick='ir(" + x.id + ")'>"
