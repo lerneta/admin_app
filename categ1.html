@@ -128,59 +128,6 @@
             </div>
 
         </div><br>
-        <div id="sec2">
-            <p class="encabezado"><b>GRUPO B</b></p>
-            <div class="partido">
-                <table class=" table33" style="border:white">
-                    <thead>
-                        <tr style="border:white; FONT-SIZE: 10PX; text-align:center">
-                            <td></td>
-                            <td></td>
-                            <td>PJ</td>
-                            <td>PG</td>
-                            <td>PP</td>
-                            <td>DS</td>
-                            <td>SG</td>
-                            <td>SP</td>
-                            <td>DG</td>
-                            <td>GG</td>
-                            <td>GP</td>
-                        </tr>
-                    </thead>
-                    <tr style="border:white;  FONT-SIZE: 10PX; text-align:center">
-                        <td>1</td>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr style="border:white;  FONT-SIZE: 10PX; text-align:center">
-                        <td>2</td>
-                        <td><b>ERNETA</b>, Luciana</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-
-                    </tr>
-                </table>
-
-
-            </div>
-
-        </div>
-
     </div>
     <div style="height: 80px;"></div>
 
@@ -300,26 +247,8 @@
             console.log("dev", json);
             for (x of json) {
 
-                if (ultima == 0) {
-                    dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
-                    dev4 = dev4 + "<div class='partido' onclick='grupo(" + x.idcompetencia + ")' style='margin-top:0px'>"
-                    dev4 = dev4 + " <table class='table33' style='border:white'>"
-                    dev4 = dev4 + "  <thead>"
-                    dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
-                    dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
-                    dev4 = dev4 + "   <td>" + contador + "</td>"
-                    dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
-                    dev4 = dev4 + "   <td>" + x.pj + "</td>"
-                    dev4 = dev4 + "    <td>" + x.pg + "</td>"
-
-                    dev4 = dev4 + " </tr>"
-                    contador = contador + 1;
-                    ultima = x.idcompetencia;
-                } else {
-                    if (ultima != x.idcompetencia) {
-                        contador = 1;
-                        dev4 = dev4 + " </table>"
-                        dev4 = dev4 + " </div>"
+                if (x.idcompetencia == 0) {
+                    if (ultima == 0) {
                         dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
                         dev4 = dev4 + "<div class='partido' onclick='grupo(" + x.idcompetencia + ")' style='margin-top:0px'>"
                         dev4 = dev4 + " <table class='table33' style='border:white'>"
@@ -330,26 +259,45 @@
                         dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
                         dev4 = dev4 + "   <td>" + x.pj + "</td>"
                         dev4 = dev4 + "    <td>" + x.pg + "</td>"
-                        dev4 = dev4 + " </tr>"
-                        contador = contador + 1;
-                        ultima = x.idcompetencia;
 
-                    } else {
-                        dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
-                        dev4 = dev4 + "   <td>" + contador + "</td>"
-                        dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
-                        dev4 = dev4 + "   <td>" + x.pj + "</td>"
-                        dev4 = dev4 + "    <td>" + x.pg + "</td>"
                         dev4 = dev4 + " </tr>"
                         contador = contador + 1;
                         ultima = x.idcompetencia;
+                    } else {
+                        if (ultima != x.idcompetencia) {
+                            contador = 1;
+                            dev4 = dev4 + " </table>"
+                            dev4 = dev4 + " </div>"
+                            dev4 = dev4 + " <p class='encabezado' style='margin-top:10px'><b>" + x.nombrecompetencia + "</b></p>"
+                            dev4 = dev4 + "<div class='partido' onclick='grupo(" + x.idcompetencia + ")' style='margin-top:0px'>"
+                            dev4 = dev4 + " <table class='table33' style='border:white'>"
+                            dev4 = dev4 + "  <thead>"
+                            dev4 = dev4 + "      <tr style='border:white; FONT-SIZE: 10PX; text-align:center'><td></td><td></td><td>PJ</td><td>PG</td></tr></thead>"
+                            dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                            dev4 = dev4 + "   <td>" + contador + "</td>"
+                            dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                            dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                            dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                            dev4 = dev4 + " </tr>"
+                            contador = contador + 1;
+                            ultima = x.idcompetencia;
+
+                        } else {
+                            dev4 = dev4 + "  <tr style='border:white;  FONT-SIZE: 10PX; text-align:center'>"
+                            dev4 = dev4 + "   <td>" + contador + "</td>"
+                            dev4 = dev4 + "  <td><b>" + x.apellido + "</b>, " + x.nombre + "</td>"
+                            dev4 = dev4 + "   <td>" + x.pj + "</td>"
+                            dev4 = dev4 + "    <td>" + x.pg + "</td>"
+                            dev4 = dev4 + " </tr>"
+                            contador = contador + 1;
+                            ultima = x.idcompetencia;
+                        }
                     }
                 }
+                dev4 = dev4 + " </table>"
+                dev4 = dev4 + " </div>"
+                $("#sec2").html(dev4);
             }
-            dev4 = dev4 + " </table>"
-            dev4 = dev4 + " </div>"
-            $("#sec2").html(dev4);
-
         };
 
     })
