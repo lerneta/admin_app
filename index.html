@@ -26,8 +26,10 @@
     <div id="cuerpo">
         <div id="sec1">
             <p class="encabezado"><b>CATEGORIAS</b></p>
-            <div id="bot" class="bot" style="overflow-x:auto">
+            <div style="width:100%;overflow:auto">
+                <div id="bot" class="bot" style="width: 900px; overflow-x:auto; text-align:center">
 
+                </div>
             </div>
         </div>
         <div id="sec2">
@@ -78,13 +80,13 @@
 
     <div class="fixed">
         <div id="barra">
-            <div><img src="img/ic1.png" id="ic1">
+            <div><img src="img/icono-partidos-01.svg" id="ic1">
                 <p><b>PARTIDOS</b></p>
             </div>
-            <div style="padding-top: 5px"><img src="img/ic2.png" id="ic2">
+            <div style="padding-top: 5px"><img src="img/icono-posiciones-01.svg" id="ic2">
                 <P style="padding-top: 5px">POSICIONES</P>
             </div>
-            <div><img src="img/ic3.png" id="ic3">
+            <div><img src="img/icono-jugador-01.svg" id="ic3">
                 <P>JUGADOR</P>
             </div>
         </div>
@@ -122,14 +124,14 @@
         if (anuncioParam == null) {
             json = JSON.stringify({
                 type: "C",
-                request: "PARTIDOS",
+                request: "PARTIDOS_APP",
                 idcomp: "0",
                 id: "0"
             });
         } else {
             json = JSON.stringify({
                 type: "C",
-                request: "PARTIDOS",
+                request: "PARTIDOS_APP",
                 idcomp: anuncioParam,
                 id: "0"
             });
@@ -194,7 +196,7 @@
                     if (anuncioParam == x.id) {
                         dev2 = dev2 + "<div class='activo' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
                     } else {
-                        dev2 = dev2 + "<div style='color:#797979' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
+                        dev2 = dev2 + "<div class='boton'  style='color:#797979;' onclick='traer(" + x.id + ")'>" + x.nombre + "</div>"
                     }
                 }
                 console.log(x);
